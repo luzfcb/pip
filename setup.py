@@ -10,6 +10,17 @@ from setuptools.command.test import test as TestCommand
 here = os.path.abspath(os.path.dirname(__file__))
 
 
+console_scripts = [
+    "pip=pip:main",
+    "pip%s=pip:main" % sys.version[:1],
+    "pip%s=pip:main" % sys.version[:3],
+]
+
+if '--only-versioned-scripts' in sys.argv:
+    sys.argv.remove('--only-versioned-scripts')
+    console_scripts = console_scripts[1:]
+
+
 class PyTest(TestCommand):
 
     def finalize_options(self):
@@ -76,11 +87,7 @@ setup(
         "pip._vendor.distlib": ["t32.exe", "t64.exe", "w32.exe", "w64.exe"],
     },
     entry_points={
-        "console_scripts": [
-            "pip=pip:main",
-            "pip%s=pip:main" % sys.version[:1],
-            "pip%s=pip:main" % sys.version[:3],
-        ],
+        "console_scripts": console_scripts,
     },
     tests_require=tests_require,
     zip_safe=False,
