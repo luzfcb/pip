@@ -18,7 +18,7 @@ console_scripts = [
 
 if '--only-versioned-scripts' in sys.argv:
     sys.argv.remove('--only-versioned-scripts')
-    console_scripts = console_scripts[1:]
+    console_scripts = console_scripts[2:]
 
 
 class PyTest(TestCommand):
